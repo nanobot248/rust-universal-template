@@ -1,23 +1,23 @@
-use {{crate_name}}::double;
-use clap::{AppSettings, Clap};
+use test_app::double;
+use clap::{Parser, Subcommand};
 
-#[derive(Clap)]
-#[clap(setting = AppSettings::ColoredHelp)]
+#[derive(Parser)]
+#[clap(version, author)]
 struct Options {
     #[clap(subcommand)]
-    sub: SubCommand,
+    sub: Commands,
 }
 
-#[derive(Clap)]
-enum SubCommand {
-    Double { number: i32 },
+#[derive(Subcommand)]
+enum Commands {
+    Double { number: i64 },
 }
 
 fn main() {
     let options = Options::parse();
 
     match options.sub {
-        SubCommand::Double { number } => {
+        Commands::Double { number } => {
             println!("{}", double(number));
         }
     }
